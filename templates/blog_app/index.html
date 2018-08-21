@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<header>
+     <h1>Welcome!</h1>
+</header>
+  <div class="main">
+
+      <p id="x">some texts</p>
+      <article>
+          <p class="title">Posts</p>
+          <div class="post">
+              <ul>
+                  <li class="titlePost"> </li>
+                  <li  class="bodyPost"> </li>
+                  <li class="comment">
+                          <div class="CMRow">
+                           <div class="name"> </div>
+                           <div class="time"></div>
+                          </div>
+                          <div class="CMBody"></div>
+                  </li>
+              </ul>
+          </div>
+      </article>
+      <aside>
+    <p class="links">Links</p>
+          <ul class="link">
+              <li><a  href=" "> <p> link1 </p></a> </li>
+              <li><a  href=" "> <p> link1 </p></a> </li>
+              <li><a  href=" "> <p> link1 </p></a> </li>
+              <li><a  href=" "> <p> link1 </p></a> </li>
+              <li><a  href=" "> <p> link1 </p></a> </li>
+          </ul>
+      </aside>
+  </div>
+
+    <script>
+
+        window.onload=function (ev) {
+
+                var XMl = new XMLHttpRequest();
+                XMl.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var res = JSON.parse(this.response);
+                        var posts = res["posts"];
+                        for(var idx in posts) {
+                            var title = posts[idx]["title"];
+                            var newTitleHTML = $("<p>"+title+"</p>");
+                            newTitleHTML.addClass("titlePost");
+                            newTitleHTML.appendTo(".post");
+
+                            var body = posts[idx]["body"];
+                            var newBody = $("<p>"+body+"</p><br>");
+                            newBody.addClass("bodyPost");
+                            newBody.appendTo(".post");
+
+                            var post_id = posts[idx]["id"];
+                            var more_link = $('<p><a href="/post_detail/' + post_id + '/" target="-blank">more</a></p>');
+                            more_link.appendTo(".post");
+
+
+                            var comments = posts[idx]["comments"];
+
+                            for(var CM in comments){
+
+
+                                var CMauthor = comments[CM]["author"];
+                                var newCommentAuthorHTML = $("<p>"+CMauthor+"</p>");
+                                newCommentAuthorHTML.addClass("name");
+                                newCommentAuthorHTML.appendTo(".post");
+
+                                var CMtime_published = comments[CM]["time_published"];
+                                var newCommentTimeHTML = $("<p>"+CMtime_published+"</p>");
+                                newCommentTimeHTML.addClass("time");
+                                newCommentTimeHTML.appendTo(".post");
+
+                                var comment = comments[CM]["body"];
+                                var newCommentHTML = $("<p>"+comment+"</p>");
+                                newCommentHTML.addClass("CMBody");
+                                newCommentHTML.appendTo(".post");
+
+                            }
+
+                            {#alert(title);#}
+                        }
+
+                    }
+                };
+                XMl.open("GET", "/get_posts/", true);
+                XMl.send();
+        }
+
+
+   /*   $.ajax({
+            url: "/get_posts/",
+            success: function(result){
+                console.log(JSON.stringify(result));
+                $.each(result.posts, function(idx, post) {
+                    var title = post.title;
+                    var body = post.body;
+                    var author = post.author;
+                    var time_published = post.time_published;
+                    var newTitleHTML = $("<p>"+title+"</p>");
+                    newTitleHTML.addClass("titlePost");
+                    newTitleHTML.appendTo(".post");
+                    var html = " <br>body: " + body +
+                        " <br>author: " + author +
+                        " <br>time_published: " + time_published;
+                    var newPostHTML = $("<p>"+html+"</p>");
+                    newPostHTML.addClass("bodyPost");
+                    newPostHTML.appendTo(".post");
+
+                     $.each(post.comments,function (idx2, comment) {
+                        var CMbody = comment.body;
+                        var CMauthor = comment.author;
+                        var CMtime_published = comment.time_published;
+                        commentHtml = "<li><p>" + CMbody + "<br> "+ CMauthor+ "<br> "+CMtime_published+"</p></li>";
+                        var newCommentAuthorHTML = $("<p>"+CMauthor+"</p>");
+                        newCommentAuthorHTML.addClass("name");
+                        newCommentAuthorHTML.appendTo(".post");
+                        var newCommentTimeHTML = $("<p>"+CMtime_published+"</p>");
+                        newCommentTimeHTML.addClass("time");
+                        newCommentTimeHTML.appendTo(".post");
+                        var newCommentHTML = $("<p>"+CMbody+"</p>");
+                        newCommentHTML.addClass("CMBody");
+                        newCommentHTML.appendTo(".post");
+
+                    });
+
+                });
+               $("<p>"+JSON.stringify(result["posts"][0]["title"])+"</p>").appendTo("body");
+        }});*/
+    </script>
+
+    <style>
+
+
+        .comment{
+            background-color: black;
+            color: white;
+            display: block;
+        }
+
+        .CMRow{
+            background-color: white;
+            display: inline;
+        }
+        .name{
+            background-color: #cc3300;
+            color: white;
+            float: left;
+            width: 30%;
+        }
+        .time{
+             background-color: #003366;
+            color: white;
+            float: right;
+            width: 70%;
+
+        }
+
+        .CMBody{
+            background-color: white;
+            color: black;
+        }
+
+        .link {
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .link li{
+            margin-top: 5px;
+             display: block;
+        }
+        .link  li a {
+
+            width: 100%;
+            float: left;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+            font-size: 30px;
+            text-decoration: none;
+            background-color: #333;
+            color: white;
+        }
+
+        .link li a:hover {
+        color: pink;
+        background-color: white;
+        }
+
+        .main{
+            background-color: #888888;
+            width: 100%;
+            margin-top:10px;
+        }
+       article{
+            float: left;
+            width: 75%;
+            background-color: white;
+        }
+        aside{
+
+            float: right;
+            width: 23%;
+            background-color:pink;
+        }
+        .links{
+                height: 100%;
+         background-color: #5E5694;
+            font-size: 40px;
+          color: white;
+            padding: 5px;
+            margin: 10px;
+        }
+
+
+        .title{
+            width: 100%;
+         background-color:  deeppink;
+            font-size: 40px;
+          color: white;
+            margin: 0;
+        }
+
+        .post{
+            width: 100%;
+            background-color: gray;
+            font-size: 30px;
+            color: white;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .post li{
+            text-decoration: none;
+            font-family: Arial;
+            list-style-type: none;
+        }
+
+        .titlePost{
+            margin-top: 10px;
+            font-size:40px;
+            color: white;
+        }
+        .bodyPost{
+            font-size:20px;
+            color: white;
+            margin-left: 5px;
+        }
+        header{
+            background-color: #222222;
+            color: #eeeeee;
+            text-align: center;
+            height:80px;
+        }
+
+        p,h1{
+            font-family: Arial;
+        }
+
+    </style>
+
+</body>
+</html>

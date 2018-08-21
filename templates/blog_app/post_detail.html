@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+<script>
+    var url = window.location.href;
+    url = url.replace("post_detail", "get_post");
+
+    window.onload = function (ev) {
+        var XML = new XMLHttpRequest();
+        XML.onreadystatechange = function () {
+
+            if(XML.status == 200 && XML.readyState == 4){
+                var post = JSON.parse(this.response);
+
+                var title = post["title"];
+                var newTitleHTML = $("<p>"+title+"</p>");
+                newTitleHTML.appendTo("body");
+
+                var body = post["body"];
+                var newBody = $("<p>"+body+"</p><br>");
+                newBody.appendTo("body");
+
+                var comments = post["comments"];
+
+                for(var CM in comments){
+
+
+                    var CMauthor = comments[CM]["author"];
+                    var newCommentAuthorHTML = $("<p>"+CMauthor+"</p>");
+                    newCommentAuthorHTML.appendTo("body");
+
+                    var CMtime_published = comments[CM]["time_published"];
+                    var newCommentTimeHTML = $("<p>"+CMtime_published+"</p>");
+                    newCommentTimeHTML.appendTo("body");
+
+                    var comment = comments[CM]["body"];
+                    var newCommentHTML = $("<p>"+comment+"</p>");
+                    newCommentHTML.appendTo("body");
+
+                }
+            }
+        };
+        XML.open("GET", url, true);
+        XML.send();
+    };
+
+</script>
+</body>
+</html>
