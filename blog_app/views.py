@@ -1,11 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import JsonResponse
+from django.contrib.auth import authenticate, login, logout
 from .models import Post, Comment
 
 
 def index(request):
     return render(request, 'blog_app/index.html', {})
-
 
 def get_posts(request):
     posts = {'posts': []}
@@ -50,3 +50,26 @@ def get_post(request, id):
         'comments': comments
     }
     return JsonResponse(post_context)
+
+
+def user_login(request):
+    if request.method == 'POST':
+        print(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+        if username is None or password is None:
+            return JsonResponse({"error": "fill out username and password"})
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            print("user logged in")
+            return JsonResponse({"success": reverse("blog_app:index")})
+        else:
+            return JsonResponse({"error": "Username or Password is wrong."})
+    else:
+        return render(request, "blog_app/login.html")
+
+
+def user_logout(request):
+    logout(request)
+    return redirect(reverse("blog_app:index"))
