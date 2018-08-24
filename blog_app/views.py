@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import render, get_object_or_404, redirect, reverse, Http404
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from .models import Post, Comment
 
 
@@ -73,3 +74,33 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse("blog_app:index"))
+
+
+def user_signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect(reverse("blog_app:index"))
+    else:
+        form = UserCreationForm()
+    return render(request, 'blog_app/sign_up.html', {'form': form})
+
+
+def add_comment(request):
+    if request.user.is_authenticated:
+        author = request.user
+    else:
+        return JsonResponse({"error": "request.user is not authenticated"})
+    text = request.POST.get('text', None)
+    post_id = request.POST.get('post_id', None)
+
+    if text is None or post_id is None:
+        return JsonResponse({"error": "text or post_id not provided"})
+
+    Comment.objects.get_or_create(post_id=post_id, author=author, text=text)
+    return JsonResponse({"success": "new comment added successfully!"})
