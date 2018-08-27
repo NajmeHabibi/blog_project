@@ -33,7 +33,7 @@ class Category(models.Model):
         return list(reversed(ancestors))
 
     def __str__(self):
-        return self.get_ancestor_names_path()
+        return ' -> '.join(self.get_ancestor_names_path())
 
 
 class Post(models.Model):
