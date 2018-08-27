@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse, Http4
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post, Comment
+from .models import Post, Comment, Category
 
 
 def index(request):
@@ -46,11 +46,17 @@ def get_post(request, id):
         'id': post.id,
         'title': post.title,
         'body': post.body,
+        'category': post.category,
         'author': post.author.username,
         'time_published': post.time_published,
         'comments': comments
     }
     return JsonResponse(post_context)
+
+
+def get_categories(request):
+    context = Category.get_json_repr()
+    return JsonResponse(context)
 
 
 def user_login(request):
