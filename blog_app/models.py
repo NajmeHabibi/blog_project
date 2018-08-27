@@ -24,6 +24,21 @@ class Category(models.Model):
         context = {}
         return dfs_rec(root, context, visited)
 
+    def get_descendants(self):
+        result = []
+        visited = {}
+        for cat in Category.objects.all():
+            visited[cat] = False
+        return self.get_descendants_util(self, result, visited)
+
+    def get_descendants_util(self, s, q, visited):
+        visited[s] = True
+        q.append(s)
+        for child in s.children.all():
+            if visited[child] is False:
+                q = self.get_descendants_util(child, q, visited)
+        return q
+
     def get_ancestor_names_path(self):
         cur_node = self
         ancestors = []

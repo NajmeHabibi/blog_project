@@ -8,9 +8,20 @@ from .models import Post, Comment, Category
 def index(request):
     return render(request, 'blog_app/index.html', {})
 
+
 def get_posts(request):
-    posts = {'posts': []}
-    for post in Post.objects.filter(status__exact='publish'):
+    category = request.GET.get('category', None)
+    posts = Post.objects.filter(status__exact='publish')
+    if category is not None:
+        try:
+            cat_descendants = Category.objects.get(name=category).get_descendants()
+        except Category.DoesNotExist:
+            return JsonResponse({"error": "category {} does not exists.".format(category)})
+        posts = posts.filter(category__in=cat_descendants)
+
+    context = {'posts': []}
+
+    for post in posts:
         comments = []
         for comment in post.comments.filter(is_approved=True):
             comments.append({
@@ -18,7 +29,7 @@ def get_posts(request):
                 'author': comment.author.username,
                 'time_published': comment.time_published,
             })
-        posts['posts'].append({
+        context['posts'].append({
             'id': post.id,
             'title': post.title,
             'body': post.body,
@@ -26,7 +37,7 @@ def get_posts(request):
             'time_published': post.time_published,
             'comments': comments
         })
-    return JsonResponse(posts)
+    return JsonResponse(context)
 
 
 def post_detail(request, id):
