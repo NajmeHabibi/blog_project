@@ -68,7 +68,7 @@ window.onload=function (ev) {
 
     var signupButton = document.getElementById("signupButtonInIndexHTML");
     signupButton.onclick = function () {
-        window.open("");
+        window.open("user_signup");
     }
 };
 

@@ -4,15 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>signUp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <script src="{% static '' %}"></script>
+    <script src="{% static 'js/signup.js' %}"></script>
 </head>
 <body>
- <div>
 
-     <input type="text">
-     <input>
-     <input>
- </div>
+    <div class="container form-group">
+        <b><p>USERNAME</p></b>
+        <input type="text" id="nameSignUp" class="form-control">
+        <b><p>PASSWORD</p></b>
+        <input type="password" id="passwordSignUp" class="form-control" name="password1">
+        <b><p>REPEAT PASSWORD</p></b>
+        <input type="password" id="confirm" class="form-control" name="password2">
+        <button type="submit" id="signUp_BTN" class="btn btn-primary">JOIN NOW</button>
+    </div>
+{#    {{ form.as_p }}#}
 </body>
 </html>

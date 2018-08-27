@@ -9,12 +9,16 @@
     <script src="{% static 'js/post_detail.js' %}"></script>
 </head>
 <body>
-<div id="body" class="post select2-container">
+<div id="body" class="post container">
 </div>
-<div class="">
-    <input type="text" name="name">
-    <input type="email" name="email">
-    <textarea name="massage"></textarea>
+<div class="container" class="form-group">
+    <p>name</p>
+    <input type="text" name="name" id="nameInput" class="form-control">
+    <p>email</p>
+    <input type="email" name="email" id="emailInput" class="form-control">
+    <p>comment</p>
+    <textarea name="massage" id="commentTextarea" class="form-control"></textarea>
+    <button type="submit" id="sendButton" class="btn btn-primary"  style="float: right">SEND</button>
 </div>
 </body>
 </html>

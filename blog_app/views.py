@@ -85,10 +85,12 @@ def user_signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect(reverse("blog_app:index"))
+            return JsonResponse({"success": reverse("blog_app:index")})
+        else:
+            return JsonResponse({"error": form.errors})
     else:
         form = UserCreationForm()
-    return render(request, 'blog_app/sign_up.html', {'form': form})
+        return render(request, 'blog_app/sign_up.html', {'form': form})
 
 
 def add_comment(request):
@@ -102,5 +104,5 @@ def add_comment(request):
     if text is None or post_id is None:
         return JsonResponse({"error": "text or post_id not provided"})
 
-    Comment.objects.get_or_create(post_id=post_id, author=author, text=text)
+    Comment.objects.get_or_create(post_id=post_id, author=author, body=text)
     return JsonResponse({"success": "new comment added successfully!"})
