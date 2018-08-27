@@ -33,6 +33,7 @@ def get_posts(request):
             'id': post.id,
             'title': post.title,
             'body': post.body,
+            'category': post.category.name,
             'author': post.author.username,
             'time_published': post.time_published,
             'comments': comments
@@ -57,7 +58,7 @@ def get_post(request, id):
         'id': post.id,
         'title': post.title,
         'body': post.body,
-        'category': post.category,
+        'category': post.category.name,
         'author': post.author.username,
         'time_published': post.time_published,
         'comments': comments
