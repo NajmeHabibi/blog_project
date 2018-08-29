@@ -97,11 +97,10 @@ class Post(models.Model):
                 else:
                     unseen_words.append(word)
             if len(seen_words) != 0:
-                result.append({
-                    "post": post.get_post_info(),
-                    "seen_words": seen_words,
-                    "unseen_words": unseen_words
-                })
+                post_info = post.get_post_info()
+                post_info["seen_words"] = seen_words
+                post_info["unseen_words"] = unseen_words
+                result.append(post_info)
 
         sorted_result = sorted(result, key=lambda k: len(k["seen_words"]), reverse=True)
         return sorted_result
