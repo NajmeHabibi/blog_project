@@ -13,4 +13,5 @@ urlpatterns = [
     path('user_signup/', views.user_signup, name='user_signup'),
     path('add_comment/', views.add_comment, name='add_comment'),
     path('get_categories/', views.get_categories, name='get_categories'),
+    path('search_in_posts/', views.search_in_posts, name='search_in_posts'),
 ]

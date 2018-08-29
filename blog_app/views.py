@@ -22,22 +22,7 @@ def get_posts(request):
     context = {'posts': []}
 
     for post in posts:
-        comments = []
-        for comment in post.comments.filter(is_approved=True):
-            comments.append({
-                'body': comment.body,
-                'author': comment.author.username,
-                'time_published': comment.time_published,
-            })
-        context['posts'].append({
-            'id': post.id,
-            'title': post.title,
-            'body': post.body,
-            'category': post.category.name,
-            'author': post.author.username,
-            'time_published': post.time_published,
-            'comments': comments
-        })
+        context['posts'].append(post.get_post_info())
     return JsonResponse(context)
 
 
@@ -47,22 +32,7 @@ def post_detail(request, id):
 
 def get_post(request, id):
     post = get_object_or_404(Post, id=id)
-    comments = []
-    for comment in post.comments.filter(is_approved=True):
-        comments.append({
-            'body': comment.body,
-            'author': comment.author.username,
-            'time_published': comment.time_published,
-        })
-    post_context = {
-        'id': post.id,
-        'title': post.title,
-        'body': post.body,
-        'category': post.category.name,
-        'author': post.author.username,
-        'time_published': post.time_published,
-        'comments': comments
-    }
+    post_context = post.get_post_info()
     return JsonResponse(post_context)
 
 
@@ -124,3 +94,12 @@ def add_comment(request):
 
     Comment.objects.get_or_create(post_id=post_id, author=author, body=text)
     return JsonResponse({"success": "new comment added successfully!"})
+
+
+def search_in_posts(request):
+    try:
+        to_be_searched = request.GET["stream"]
+    except KeyError:
+        return JsonResponse({"error": "stream not supplied"})
+    result_list = Post.search_in_body(to_be_searched)
+    return JsonResponse(result_list, safe=False)

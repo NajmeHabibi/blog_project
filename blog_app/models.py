@@ -64,6 +64,48 @@ class Post(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     time_published = models.DateTimeField(blank=True, null=True)
 
+    def get_post_info(self):
+        comments = []
+        for comment in self.comments.filter(is_approved=True):
+            comments.append({
+                'body': comment.body,
+                'author': comment.author.username,
+                'time_published': comment.time_published,
+            })
+        post_context = {
+            'id': self.id,
+            'title': self.title,
+            'body': self.body,
+            'category': self.category.name,
+            'author': self.author.username,
+            'time_published': self.time_published,
+            'comments': comments
+        }
+        return post_context
+
+    @classmethod
+    def search_in_body(cls, to_be_searched):
+        words = to_be_searched.split()
+        result = []
+
+        for post in cls.objects.all():
+            seen_words = []
+            unseen_words = []
+            for word in words:
+                if word in post.body:
+                    seen_words.append(word)
+                else:
+                    unseen_words.append(word)
+            if len(seen_words) != 0:
+                result.append({
+                    "post": post.get_post_info(),
+                    "seen_words": seen_words,
+                    "unseen_words": unseen_words
+                })
+
+        sorted_result = sorted(result, key=lambda k: len(k["seen_words"]), reverse=True)
+        return sorted_result
+
     def __str__(self):
         return '{} by {}'.format(self.title, self.author)
 
