@@ -85,6 +85,12 @@ class Post(models.Model):
 
     @classmethod
     def search_in_body(cls, to_be_searched):
+        def string_found(string1, string2):
+            import re
+            if re.search(r"\b" + re.escape(string1) + r"\b", string2):
+                return True
+            return False
+
         words = to_be_searched.split()
         result = []
 
@@ -92,7 +98,7 @@ class Post(models.Model):
             seen_words = []
             unseen_words = []
             for word in words:
-                if word in post.body:
+                if string_found(word, post.body):
                     seen_words.append(word)
                 else:
                     unseen_words.append(word)
