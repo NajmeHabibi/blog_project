@@ -1,11 +1,14 @@
 function element_maker(text ,type ,id,className) {
         var new_p = document.createElement(type);
-        var textnode = document.createTextNode(text);
-        new_p.appendChild(textnode);
+        if(text != ""){
+            var textnode = document.createTextNode(text);
+            new_p.appendChild(textnode);
+        }
         new_p.classList.add(className);
         document.getElementById(id).appendChild(new_p);
-
+        return new_p;
     }
+
 var url = window.location.href;
 url = url.replace("post_detail", "get_post");
 
@@ -13,27 +16,27 @@ window.onload = function (ev) {
     var XML = new XMLHttpRequest();
     var post;
     XML.onreadystatechange = function () {
-
         if(XML.status == 200 && XML.readyState == 4){
-             post = JSON.parse(this.response);
-
+            post = JSON.parse(this.response);
             var title = post["title"];
-            element_maker(title,"p","body","post");
+            element_maker(title,"p","body","titlePost");
             var body = post["body"];
-            element_maker(body,"p","body","post");
+            element_maker(body,"p","body","bodyPost");
 
             var comments = post["comments"];
 
             for(var CM in comments){
+                var div = element_maker("","div","body","postComments");
+
                 var CMauthor = comments[CM]["author"];
-                element_maker(CMauthor,"p","body","post");
-
+                var authorP = element_maker(CMauthor,"p","body","authorPostComment");
+                div.appendChild(authorP);
                 var CMtime_published = comments[CM]["time_published"];
-                element_maker(CMtime_published,"p","body","post");
-
+                var CMtime_publishedP = element_maker(CMtime_published,"p","body","timePostComment");
+                div.appendChild(CMtime_publishedP);
                 var comment = comments[CM]["body"];
-                element_maker(comment,"p","body","comment");
-
+                var commentP = element_maker(comment,"p","body","comment");
+                div.appendChild(commentP);
             }
         }
     };

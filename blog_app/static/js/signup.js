@@ -1,8 +1,8 @@
-window.onload = function (ev) {
+window.onload = function () {
     var signUp_BTN=document.getElementById("signUp_BTN");
-    signUp_BTN.onclick = function (ev2) {
+    signUp_BTN.onclick = function () {
         var XML = new XMLHttpRequest();
-        XML.onreadystatechange = function (ev2) {
+        XML.onreadystatechange = function () {
             if(this.readyState == 4 && this.status == 200 ){
                 var result = JSON.parse(this.responseText);
                 if ("error" in result) {

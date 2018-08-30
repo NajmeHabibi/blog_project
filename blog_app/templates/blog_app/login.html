@@ -11,13 +11,34 @@
 </head>
 <body>
 
-<div class="container jumbotron" id="form_login">
-    <label >UserName</label>
-    <input type="text" id="UserName" required>
-    <label >Password</label>
-    <input type="password"  id="Password" required>
-    <button type="submit" id="submitButton">submit</button>
-</div>
+ <img src="{% static 'images/login.jpg' %}" class="img-fluid"   >
+ <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg  "  >
+        <a class="navbar-brand" href="#">Najme</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'blog_app:index' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://www.w3schools.com/howto/howto_css_responsive_text.asp">Learn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Me</a>
+                </li>
+                <li class="nav-item">
+                    <a href= "https://www.w3schools.com/" class="nav-link disabled" style="color: #cc3300">w3school</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+ <div class="container  signUpContainer form-group" id="form_login">
+    <label for="UserName" class="signUpLabel">User Name</label>
+    <input type="text" id="UserName" class="form-control" required>
+    <label for="Password" class="signUpLabel" >Password</label>
+    <input type="password"  id="Password"  class="form-control" required>
+    <button type="submit" id="submitButton" class="btn signUpButton">submit</button>
+ </div>
 
 </body>
 </html>

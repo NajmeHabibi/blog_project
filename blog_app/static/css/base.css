@@ -1,103 +1,85 @@
+.stickydiv{
+    position: fixed ;
+    width: 100%;
+}
+.moreLink{
 
-.comment{
-    background-color: black;
-    color: white;
-    display: block;
+    margin-right: 10px;
+    font-size: 20px;
+    font-family: Arial;
 }
-
-.CMRow{
-    background-color: white;
-    display: inline;
-}
-.name{
-    background-color: #cc3300;
-    color: white;
-    float: left;
-    width: 30%;
-}
-.time{
-     background-color: #003366;
-    color: white;
+aside{
     float: right;
-    width: 70%;
-
+    width: 23%;
 }
-
-.CMBody{
-    background-color: white;
-    color: black;
-}
-
 .link {
+    background-color:white;
+    border: 2px solid  #dc3646;
     list-style-type: none;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
-.link li{
-    margin-top: 5px;
-     display: block;
+.linkActive {
+    font-weight: bold !important;
+    color: white !important;
+    background-color: #ff7577 !important;
 }
-.link  li a {
+.list-group-item-action{
+    border-radius: 0px !important;
+    border: none !important;
+    font-size: 25px !important;
 
-    width: 100%;
-    float: left;
-    color: white;
-    text-align: center;
-    font-family: Arial;
-    font-size: 30px;
-    text-decoration: none;
-    background-color: #333;
-    color: white;
+}
+.hideLink{
+    display: none;
+}
+.open{
+    background-color: black !important;
 }
 
 .link li a:hover {
-color: pink;
-background-color: white;
+    color: white;
+    background-color: lightgray ;
+    border: none;
 }
 
 .main{
     background-color: #888888;
     width: 100%;
-    margin-top:10px;
+    margin-top:15px;
 }
 article{
     float: left;
     width: 75%;
     background-color: white;
 }
-aside{
-
-    float: right;
-    width: 23%;
-    background-color:pink;
-}
-.links{
-        height: 100%;
- background-color: #5E5694;
-    font-size: 40px;
-  color: white;
-    padding: 5px;
-    margin: 10px;
-}
-
 
 .title{
     width: 100%;
- background-color:  deeppink;
+    background-color: #dc3646;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
     font-size: 40px;
-  color: white;
+    padding-left: 10px;
+    color: white;
     margin: 0;
 }
 
 .post{
     width: 100%;
-    background-color: gray;
+    background-color: white;
+    border: 2px solid  #dc3646;
+    border-radius: 5px;
     font-size: 30px;
     color: white;
+    padding-left: 10px;
     margin-top: 10px;
     display: block;
+    margin-bottom: 30px;
 }
 
 .post li{
@@ -109,20 +91,31 @@ aside{
 .titlePost{
     margin-top: 10px;
     font-size:40px;
-    color: white;
+    color: black;
 }
 .bodyPost{
     font-size:20px;
-    color: white;
+    color: #282828;
     margin-left: 5px;
 }
+
+.categoryPost{
+    font-size:15px;
+    color: #282828;
+    margin-left: 5px;
+}
+
 header{
     background-color: #222222;
     color: #eeeeee;
     text-align: center;
     height:80px;
 }
-
+header h1{
+    float: left;
+    margin-left: 15px;
+    margin-top: 20px;
+}
 p,h1{
     font-family: Arial;
 }
@@ -138,4 +131,82 @@ p,h1{
 }
 #nameInput{
 
+}
+
+.signUpContainer{
+    margin-top: 40px;
+    border: 3px solid #c93d4b;
+    border-radius: 15px;
+    width: 30%;
+}
+.signUpLabel{
+    font-family: Arial;
+    font-size: 20px;
+    margin-top: 30px;
+}
+.signUpButton{
+    margin-top: 30px;
+    background-color:#c93d4b ;
+    color: white;
+    font-size: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+.mainfooter{
+    background-color:#c93d4b ;
+    width: 100%;
+    height:100px;
+    clear: both;
+    z-index: 20;
+    position: relative;
+    height: 100px;
+}
+
+.categoryLinks{
+    font-size: 20px;
+    font-family: Arial !important;
+}
+
+ /* comments:*/
+
+.morePostContainer{
+}
+
+.postComments{
+    width: 100%;
+    background-color:#c93d4b ;
+    height: auto;
+    margin-top: 10px;
+}
+.authorPostComment{
+    color: black;
+    font-family: Arial;
+    font-size: 15px;
+}
+.timePostComment{
+    font-size: 15px;
+    color: black;
+    font-family: Arial;
+}
+.comment{
+    color: black;
+    font-family: Arial;
+}
+
+.searchBTN{
+  margin-left: 10px;
+}
+.searchUl{
+    float: right;
+   margin-left: 1190px;
+}
+
+.highlight{
+   background-color: yellow;
+}
+.unseenWords{
+    text-decoration: line-through;
+    color: #444444;
+    font-size: 20px;
+    font-family: Arial;
 }
